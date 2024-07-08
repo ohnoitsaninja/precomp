@@ -1,0 +1,42 @@
+let img1, img2;
+let blendedImg;
+
+function setup() {
+  noCanvas();
+  
+  const fileInput1 = select('#fileInput1');
+  const fileInput2 = select('#fileInput2');
+  const blendButton = select('#blendButton');
+  const canvasContainer = select('#canvasContainer');
+
+  fileInput1.changed(() => loadImage(URL.createObjectURL(fileInput1.elt.files[0]), img => img1 = img));
+  fileInput2.changed(() => loadImage(URL.createObjectURL(fileInput2.elt.files[0]), img => img2 = img));
+
+  blendButton.mousePressed(() => {
+    if (img1 && img2) {
+      const cnv = createCanvas(img1.width, img1.height);
+      cnv.parent('canvasContainer');
+      blendImages();
+    }
+  });
+}
+
+function blendImages() {
+  blendedImg = createImage(img1.width, img1.height);
+  blendedImg.loadPixels();
+  img1.loadPixels();
+  img2.loadPixels();
+  
+  for (let x = 0; x < img1.width; x++) {
+    for (let y = 0; y < img1.height; y++) {
+      const index = (x + y * img1.width) * 4;
+      blendedImg.pixels[index] = (img1.pixels[index] + img2.pixels[index]) / 2;
+      blendedImg.pixels[index + 1] = (img1.pixels[index + 1] + img2.pixels[index + 1]) / 2;
+      blendedImg.pixels[index + 2] = (img1.pixels[index + 2] + img2.pixels[index + 2]) / 2;
+      blendedImg.pixels[index + 3] = 255;
+    }
+  }
+  
+  blendedImg.updatePixels();
+  image(blendedImg, 0, 0);
+}
