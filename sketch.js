@@ -27,8 +27,13 @@ function setup() {
 }
 
 function blendImages() {
+  // Use shader
   shader(shaderProgram);
+
+  // Pass images as textures to the shader
   shaderProgram.setUniform('texture1', img1);
   shaderProgram.setUniform('texture2', img2);
-  rect(0, 0, width, height);
+
+  // Draw a rectangle that covers the entire canvas
+  rect(-width / 2, -height / 2, width, height);
 }
