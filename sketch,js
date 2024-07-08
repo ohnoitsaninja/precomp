@@ -1,46 +1,8 @@
-let img1, img2;
-let blendedImg;
-let shaderProgram;
-let canvasContainer;
-
-function preload() {
-  shaderProgram = loadShader('blend.vert', 'blend.frag');
-}
-
 function setup() {
-   createCanvas(1424, 1024);
-  background(200);
-
-  // Draw some shapes to test p5.js functionality
-  fill(255, 0, 0);
-  ellipse(400, 300, 200, 200);
-
-  fill(0, 255, 0);
-  rect(300, 200, 200, 200);
-
-  fill(0, 0, 255);
-  triangle(400, 100, 500, 300, 300, 300);
-  
-  const fileInput1 = select('#fileInput1');
-  const fileInput2 = select('#fileInput2');
-  const blendButton = select('#blendButton');
-  canvasContainer = select('#canvasContainer');
-
-  fileInput1.changed(() => loadImage(URL.createObjectURL(fileInput1.elt.files[0]), img => img1 = img));
-  fileInput2.changed(() => loadImage(URL.createObjectURL(fileInput2.elt.files[0]), img => img2 = img));
-
-  blendButton.mousePressed(() => {
-    if (img1 && img2) {
-      const cnv = createCanvas(img1.width, img1.height, WEBGL);
-      cnv.parent('canvasContainer');
-      blendImages();
-    }
-  });
+    createCanvas(400, 400);
 }
 
-function blendImages() {
-  shader(shaderProgram);
-  shaderProgram.setUniform('texture1', img1);
-  shaderProgram.setUniform('texture2', img2);
-  rect(0, 0, width, height);
+function draw() {
+    background(220);
+    // Your drawing code
 }
